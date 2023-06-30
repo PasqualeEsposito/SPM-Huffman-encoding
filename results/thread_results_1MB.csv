@@ -1,0 +1,171 @@
+Completion time,threads,time
+Completion time,1,65967
+Completion time (no IO),1,64003
+Completion time,1,70339
+Completion time (no IO),1,68575
+Completion time,1,68052
+Completion time (no IO),1,66058
+Completion time,1,68298
+Completion time (no IO),1,66327
+Completion time,1,72824
+Completion time (no IO),1,70849
+Completion time,2,41556
+Completion time (no IO),2,39798
+Completion time,2,45855
+Completion time (no IO),2,43927
+Completion time,2,42169
+Completion time (no IO),2,40383
+Completion time,2,43759
+Completion time (no IO),2,41750
+Completion time,2,45638
+Completion time (no IO),2,43666
+Completion time,4,27919
+Completion time (no IO),4,26013
+Completion time,4,28929
+Completion time (no IO),4,26962
+Completion time,4,26484
+Completion time (no IO),4,24705
+Completion time,4,27771
+Completion time (no IO),4,25826
+Completion time,4,27201
+Completion time (no IO),4,25280
+Completion time,6,26486
+Completion time (no IO),6,24560
+Completion time,6,24371
+Completion time (no IO),6,22456
+Completion time,6,26365
+Completion time (no IO),6,24194
+Completion time,6,24749
+Completion time (no IO),6,22872
+Completion time,6,26036
+Completion time (no IO),6,23879
+Completion time,8,21771
+Completion time (no IO),8,19926
+Completion time,8,28599
+Completion time (no IO),8,26065
+Completion time,8,21753
+Completion time (no IO),8,19961
+Completion time,8,21478
+Completion time (no IO),8,19725
+Completion time,8,23662
+Completion time (no IO),8,21700
+Completion time,10,23390
+Completion time (no IO),10,21313
+Completion time,10,24964
+Completion time (no IO),10,22570
+Completion time,10,23355
+Completion time (no IO),10,21163
+Completion time,10,25133
+Completion time (no IO),10,22902
+Completion time,10,22537
+Completion time (no IO),10,20763
+Completion time,12,24652
+Completion time (no IO),12,22702
+Completion time,12,22634
+Completion time (no IO),12,20859
+Completion time,12,23572
+Completion time (no IO),12,21575
+Completion time,12,23323
+Completion time (no IO),12,21512
+Completion time,12,25501
+Completion time (no IO),12,23484
+Completion time,14,23719
+Completion time (no IO),14,21839
+Completion time,14,23643
+Completion time (no IO),14,21124
+Completion time,14,24682
+Completion time (no IO),14,22703
+Completion time,14,22436
+Completion time (no IO),14,20632
+Completion time,14,24386
+Completion time (no IO),14,22413
+Completion time,16,21707
+Completion time (no IO),16,19815
+Completion time,16,23631
+Completion time (no IO),16,21079
+Completion time,16,21959
+Completion time (no IO),16,20048
+Completion time,16,23498
+Completion time (no IO),16,21275
+Completion time,16,22186
+Completion time (no IO),16,20250
+Completion time,18,26011
+Completion time (no IO),18,23949
+Completion time,18,24655
+Completion time (no IO),18,22767
+Completion time,18,23165
+Completion time (no IO),18,21187
+Completion time,18,25706
+Completion time (no IO),18,23721
+Completion time,18,24696
+Completion time (no IO),18,22901
+Completion time,20,22499
+Completion time (no IO),20,20539
+Completion time,20,24768
+Completion time (no IO),20,22654
+Completion time,20,23906
+Completion time (no IO),20,21830
+Completion time,20,21275
+Completion time (no IO),20,19515
+Completion time,20,24212
+Completion time (no IO),20,22041
+Completion time,22,21490
+Completion time (no IO),22,19691
+Completion time,22,23403
+Completion time (no IO),22,21265
+Completion time,22,22600
+Completion time (no IO),22,20592
+Completion time,22,21780
+Completion time (no IO),22,19974
+Completion time,22,30527
+Completion time (no IO),22,28528
+Completion time,24,23407
+Completion time (no IO),24,21290
+Completion time,24,22138
+Completion time (no IO),24,20356
+Completion time,24,22314
+Completion time (no IO),24,20302
+Completion time,24,20951
+Completion time (no IO),24,19136
+Completion time,24,22987
+Completion time (no IO),24,20998
+Completion time,26,22305
+Completion time (no IO),26,20443
+Completion time,26,22682
+Completion time (no IO),26,20401
+Completion time,26,21648
+Completion time (no IO),26,19881
+Completion time,26,22022
+Completion time (no IO),26,20040
+Completion time,26,22508
+Completion time (no IO),26,20477
+Completion time,28,21118
+Completion time (no IO),28,19328
+Completion time,28,22305
+Completion time (no IO),28,20306
+Completion time,28,22518
+Completion time (no IO),28,20473
+Completion time,28,22832
+Completion time (no IO),28,20828
+Completion time,28,23289
+Completion time (no IO),28,21088
+Completion time,30,21099
+Completion time (no IO),30,19255
+Completion time,30,22286
+Completion time (no IO),30,20299
+Completion time,30,23158
+Completion time (no IO),30,21124
+Completion time,30,21367
+Completion time (no IO),30,19237
+Completion time,30,23252
+Completion time (no IO),30,21315
+Completion time,32,23048
+Completion time (no IO),32,20691
+Completion time,32,22254
+Completion time (no IO),32,20312
+Completion time,32,22800
+Completion time (no IO),32,20859
+Completion time,32,23513
+Completion time (no IO),32,21444
+Completion time,32,22984
+Completion time (no IO),32,20958
