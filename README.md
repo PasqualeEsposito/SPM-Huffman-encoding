@@ -7,6 +7,6 @@ HOW TO RUN THE CODE:
       ```./huffman_seq <filename.txt> -v``` (-v is optional)
       ```./huffman_thread <filename.txt>  <num_threads> -v``` (-v is optional)
       ```./huffman_ff <filename.txt> <num_threads> -v``` (-v is optional)
-     5. Before executing the FastFlow implementation, make sure you correctly downloaded the library from -> https://github.com/fastflow/fastflow.
-     6. The compressed files will be stored in the **output** folder.
+5. Before executing the FastFlow implementation, make sure you correctly downloaded the library from -> https://github.com/fastflow/fastflow.
+6. The compressed files will be stored in the **output** folder.
   
