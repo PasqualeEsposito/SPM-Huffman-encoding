@@ -7,5 +7,5 @@ The aim of this project is to create a compressor algorithm, based on Huffman co
       - ```./huffman_seq <filename.txt> -v``` (-v is optional)
       - ```./huffman_thread <filename.txt>  <num_threads> -v``` (-v is optional)
       - ```./huffman_ff <filename.txt> <num_threads> -v``` (-v is optional)
-5. The compressed files will be stored in the **output** folder.<br /><br />
+  5. The compressed files will be stored in the **output** folder.<br /><br />
 **NOTE:** Before executing the [FastFlow](https://github.com/fastflow/fastflow) implementation, make sure you correctly downloaded the library first.
