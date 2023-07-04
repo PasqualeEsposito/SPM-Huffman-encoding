@@ -1,4 +1,4 @@
-The aim of this project is to create a compressor algorithm, based on Huffman coding, that works in parallel. The parallel implementations are implemented with native threads and FastFlow (https://github.com/fastflow/fastflow).
+The aim of this project is to create a compressor algorithm, based on Huffman coding, that works in parallel. The parallel implementations are implemented with native threads and FastFlow (https://github.com/fastflow/fastflow).\\
 HOW TO RUN THE CODE:
   1. Download the folder
   2. Generate the executable files using the command ```make```
