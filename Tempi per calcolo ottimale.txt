@@ -1,0 +1,16 @@
+Sequenziale (10MB)
+Media (/5) parte sequenziale: 22000
+Media (/5) parte parallela: 626000
+
+
+Sequenziale (1MB)
+Media (/5) parte sequenziale: 3200
+Media (/5) parte parallela: 61000
+
+Sequenziale (100MB)
+Media (/5) parte sequenziale: 268000
+Media (/5) parte parallela: 6600000
+
+
+
+Tempo per un thread: 70usec

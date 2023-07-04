@@ -17,10 +17,6 @@ char decToASCII(int decimalValue) {
     return static_cast<char>(decimalValue);
 }
 
-int ASCIIToDec(char c) {
-    return static_cast<int>(c);
-}
-
 // Structure for representing a Huffman tree node
 struct Node {
     char symbol;
@@ -70,7 +66,6 @@ Node* buildHuffmanTree(const unordered_map<char, int>& frequencyTable) {
     while (pq.size() > 1) {
         Node* left = pq.top();
         pq.pop();
-        //in case there is no other element in the queue, the top() function will return nothing
         Node* right = pq.top();
         pq.pop();
 

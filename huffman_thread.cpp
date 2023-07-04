@@ -1,15 +1,16 @@
 //
-// Created by espos on 12/06/2023.
+// Pasquale Esposito, no. 649153
+// Thread version for the Huffman Coding
 //
 #include <iostream>
 #include <fstream>
 #include <string>
 #include <map>
 #include <thread>
-#include <mutex>
 #include <vector>
 #include <bitset>
 #include <cstring>
+#include <mutex>
 #include "utimer.hpp"
 #include "huffman_alg.hpp"
 
@@ -26,18 +27,20 @@ void print_time() {
     cout << "Total time (no IO): " << setw(15) << totalNoIO << " usec" << endl;
 }
 
+// Worker that counts the symbols' frequencies
 void countSymbols(const string& chunk, unordered_map<char, int>& symbolCount) {
     unordered_map<char, int> localSymbolCount;
 
-    for (char c : chunk)
-        localSymbolCount[ASCIIToDec(c)]++;
+    for (char c: chunk)
+        localSymbolCount[c]++;
 
     m.lock();
-    for (auto& pair : localSymbolCount)
+    for (auto &pair: localSymbolCount)
         symbolCount[pair.first] += pair.second;
     m.unlock();
 }
 
+// Split the input string among the workers
 void mapFrequencies(string input, int nw, unordered_map<char, int>& freqTable) {
     int length = input.size();
     int chunkSize = length / nw;
@@ -55,15 +58,17 @@ void mapFrequencies(string input, int nw, unordered_map<char, int>& freqTable) {
         tids.join();
 }
 
+// Worker that transforms the input string to a binary string
 void encodeStringWorker(string toEncode, unordered_map<char, string> huffmanCode, string& tempEncodedString) {
     string binary;
 
-    for(auto& c: toEncode)
+    for (auto &c: toEncode)
         binary += huffmanCode[c];
 
     tempEncodedString = binary;
 }
 
+// Split the input string among the workers
 string encodeString(string source, int nw, unordered_map<char, string> huffmanCode) {
     string encodedString;
     vector<string> tempEncodedString(nw);
@@ -93,10 +98,11 @@ string encodeString(string source, int nw, unordered_map<char, string> huffmanCo
     return encodedString;
 }
 
+// Worker that transforms the binary string to an ASCII string
 void encodeToASCIIWorker(string encodedString, string& tempEncodedString) {
     string encodedASCII;
 
-    for(int i = 0; i < encodedString.size(); i += 8) {
+    for (int i = 0; i < encodedString.size(); i += 8) {
         string byte = encodedString.substr(i, 8);
         encodedASCII += bitset<8>(byte).to_ulong();
     }
@@ -104,6 +110,8 @@ void encodeToASCIIWorker(string encodedString, string& tempEncodedString) {
     tempEncodedString = encodedASCII;
 }
 
+
+// Split the binary string among the workers
 string mapEncodeASCII(string encodedString, int nw) {
     string encodedASCII;
     vector<thread> threads;
@@ -178,8 +186,14 @@ int main(int argc, char** argv) {
             }
             {
                 utimer timer2("Compressing the file", &usecs);
-                encodedString = encodeString(content, nw, huffmanCode);
-                encodedString = mapEncodeASCII(encodedString, nw);
+                {
+                    utimer timer4("Binary encoding phase");
+                    encodedString = encodeString(content, nw, huffmanCode);
+                }
+                {
+                    utimer timer4("ASCII encoding phase");
+                    encodedString = mapEncodeASCII(encodedString, nw);
+                }
             }
             {
                 utimer timer2("Writing the compressed file", &usecs);
@@ -198,22 +212,6 @@ int main(int argc, char** argv) {
 
     if(flag)
         print_time();
-
-    ofstream output;
-
-    if(!strcmp(argv[1], "bible1MB.txt"))
-        output.open("results/thread_results_1MB.csv", ios::app);
-    else if(!strcmp(argv[1], "bible10MB.txt"))
-        output.open("results/thread_results_10MB.csv", ios::app);
-    else
-    if(!strcmp(argv[1], "bible100MB.txt"))
-        output.open("results/thread_results_100MB.csv", ios::app);
-
-    string str1 = "Completion time," + to_string(nw) + "," + to_string(total) + "\n";
-    string str2 = "Completion time (no IO)," + to_string(nw) + "," + to_string(totalNoIO) + "\n";
-    output << str1;
-    output << str2;
-    output.close();
 
     return 0;
 }

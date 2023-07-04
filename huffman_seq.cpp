@@ -26,21 +26,24 @@ void print_time() {
 // Count the characters in the buffer and update the frequency table
 void countCharacters(string buffer, unordered_map<char, int>& frequencyTable) {
     for (int i = 0; i < buffer.size(); i++)
-        ++frequencyTable[ASCIIToDec(buffer[i])];
+        ++frequencyTable[buffer[i]];
 }
 
-//Compresses the file
+// Compress the file
 string encodeString(string source, unordered_map<char, string> huffmanCode) {
     string binary, encodedString;
 
+    //Map the input string from ASCII to Huffman code
     for(char c: source)
         binary += huffmanCode[c];
 
+    // Add padding 0s
     if(binary.size() % 8 != 0) {
         int padding = 8 - binary.size() % 8;
         binary += string(padding, '0');
     }
 
+    // Transform the binary string to an ASCII string
     for (size_t i = 0; i < binary.size(); i += 8) {
         bitset<8> bits(binary.substr(i, 8));
         char c = static_cast<char>(bits.to_ulong());
@@ -117,22 +120,6 @@ int main(int argc, char* argv[]) {
 
     if(flag)
         print_time();
-
-    ofstream output;
-
-    if(!strcmp(argv[1], "bible1MB.txt"))
-        output.open("results/seq_results_1MB.csv", ios::app);
-    else if(!strcmp(argv[1], "bible10MB.txt"))
-        output.open("results/seq_results_10MB.csv", ios::app);
-    else
-        if(!strcmp(argv[1], "bible100MB.txt"))
-            output.open("results/seq_results_100MB.csv", ios::app);
-
-    string str1 = "Completion time," + to_string(total) + "\n";
-    string str2 = "Completion time (no IO)," + to_string(totalNoIO) + "\n";
-    output << str1;
-    output << str2;
-    output.close();
 
     return 0;
 }

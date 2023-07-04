@@ -19,66 +19,6 @@ using namespace ff;
 long total, totalNoIO, usecs;
 bool flag;
 
-/*
-typedef struct Work {
-    int pos;
-    string toEncode;
-
-    Work(string str, int pos): toEncode(str), pos(pos) {}
-} Work;
-
-class emitter : public ff::ff_monode_t<Work> {
-private:
-    int nw;
-    long int size;
-    long int chunk;
-public:
-    emitter(int nw, long int size):nw(nw), size(size) {
-        this->chunk = (size / nw) - round((size / nw) % 8);
-        binToASCII.resize(nw);
-    }
-
-    Work * svc(Work *) {
-        for(int i = 0; i < nw; i++) {
-            int from = i * chunk;
-            int to = (i == (nw - 1)) ? size : (i + 1) * chunk;  // (poor load balancing)
-            Work *t;
-            t = new Work(binary.substr(from, to), i);
-            ff_send_out(t);
-        }
-        return(EOS);
-    }
-};
-
-class collector : public ff::ff_node_t<Work> {
-private:
-    Work * tt;
-
-public:
-    Work * svc(Work * t) {
-        free(t);
-        return(GO_ON);
-    }
-
-};
-
-Work *  worker(Work * t, ff::ff_node* nn) {
-    string toEncode = t -> toEncode;
-    auto pos = t-> pos;
-
-    bitset<8> bits;
-    string res = "";
-    for (long int i = 0; i < toEncode.size(); i += 8) {
-        bits = bitset<8>(binary.substr(i, 8));
-        res += static_cast<char>(bits.to_ulong() & 0xFF);
-    }
-
-    binToASCII[pos] = res;
-
-    return t;
-}
-*/
-
 // Print the time taken by the program
 void print_time() {
     cout << endl;
@@ -109,7 +49,6 @@ int main(int argc, char* argv[]) {
     unordered_map<char, string> huffmanCode;
     Node *root;
 
-    // number of workers nw, use spinwaits instead of locks -> to use with small grain computations
     ParallelFor pf(nw);
 
     {
@@ -140,7 +79,7 @@ int main(int argc, char* argv[]) {
                     int start = i * chunkSize;
                     int end = (i == nw - 1) ? length : start + chunkSize;
                     for (int j = start; j < end; ++j)
-                        localSymbolCount[ASCIIToDec(content[j])]++;
+                        localSymbolCount[content[j]]++;
 
                     m.lock();
                     for (auto &pair: localSymbolCount)
@@ -223,144 +162,6 @@ int main(int argc, char* argv[]) {
 
     if(flag)
         print_time();
-    //cout << argv[1] << ", " << numThreads << endl;
-
-    ofstream output;
-
-    if(!strcmp(argv[1], "bible1MB.txt"))
-        output.open("results/ff_results_1MB.csv", ios::app);
-    else if(!strcmp(argv[1], "bible10MB.txt"))
-        output.open("results/ff_results_10MB.csv", ios::app);
-    else
-    if(!strcmp(argv[1], "bible100MB.txt"))
-        output.open("results/ff_results_100MB.csv", ios::app);
-
-    string str1 = "Completion time," + to_string(nw) + "," + to_string(total) + "\n";
-    string str2 = "Completion time (no IO)," + to_string(nw) + "," + to_string(totalNoIO) + "\n";
-    output << str1;
-    output << str2;
-    output.close();
 
     return 0;
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-/*
-    if (!input) {
-        cout << "Error opening input file." << endl;
-        return 1;
-    }
-
-    {
-        utimer timer("Time spent reading and counting the symbols", &time1);
-        content.assign((std::istreambuf_iterator<char>(input)), std::istreambuf_iterator<char>());
-
-        len = content.size();
-        partition = len / numThreads;
-        pf.parallel_for(0, numThreads, 1, 0, [&](const int i) {
-            int start = i * partition;
-            int end = (i == numThreads - 1) ? len : start + partition;
-            for (int j = start; j < end; ++j)
-                frequencyTable[i][content[j]]++;
-        }, numThreads);
-
-        for (auto &map : frequencyTable)
-            for (auto &pair : map)
-                frequencyMap[pair.first] += pair.second;
-    }
-
-    {
-        utimer timer("Time spent creating the Huffman Code", &time2);
-        //Generates the Huffman Tree and returns its root pointer
-        root = buildHuffmanTree(frequencyMap);
-
-        //Encodes each symbol and insert the pair <symbol, code> in the huffmanCode map
-        buildHuffmanCodes(root, "", huffmanCode);
-    }
-
-    {
-        utimer timer("Time spent compressing the file", &time3);
-        //Compresses the file
-        pf.parallel_for(0, numThreads, 1, 0, [&](const int i) {
-            string temp = "";
-            int start = i * partition;
-            int end = (i == numThreads - 1) ? len : start + partition;
-            for (int j = start; j < end; ++j)
-                temp += huffmanCode[content[j]];
-
-            encode[i] = temp;
-        }, numThreads);
-
-        for (int i = 0; i < numThreads; ++i)
-            binary += encode[i];
-
-        encode.clear();
-
-        auto e = emitter(numThreads, binary.size());
-        auto c = collector();
-        ff_Farm<Work> mf(worker, numThreads);
-        mf.add_emitter(e);
-        mf.add_collector(c);
-
-        mf.run_and_wait_end();
-
-        for (int i = 0; i < numThreads; ++i)
-            output << binToASCII[i];
-
-        output.close();
-    }
-
-    delete root;
-
-    print_time();
-    //cout << argv[1] << ", " << numThreads << endl;
-
-    ofstream output;
-
-    if(!strcmp(argv[1], "bible1MB.txt"))
-        output.open("results/thread_results_1MB.csv", ios::app);
-    else if(!strcmp(argv[1], "bible10MB.txt"))
-        output.open("results/thread_results_10MB.csv", ios::app);
-    else
-    if(!strcmp(argv[1], "bible100MB.txt"))
-        output.open("results/thread_results_100MB.csv", ios::app);
-
-    string str1 = "Completion time," + to_string(nw) + "," + to_string(total) + "\n";
-    string str2 = "Completion time (no IO)," + to_string(nw) + "," + to_string(totalNoIO) + "\n";
-    output << str1;
-    output << str2;
-    output.close();
-
-    return 0;
-}
-
-*/
-
